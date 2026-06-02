@@ -330,9 +330,22 @@ const App = {
       const blob = await DocxGenerator.generate(toGenerate);
       this.generatedBlob = blob;
 
-      const now = new Date();
-      const dateStr = now.toISOString().slice(0, 10);
-      this.downloadFilename = `convert-mania-${dateStr}.docx`;
+      // Generate dynamic filename: [mapel]_[kelas]_ASAT_2526.docx
+      const firstSoal = toGenerate[0] || {};
+      const defaults = this._getDefaults();
+      const mapelRaw = (firstSoal.mapel || defaults.mapel || '').trim();
+      const kelasRaw = (firstSoal.kelasJurusan || defaults.kelas || '').trim();
+
+      const cleanForFilename = (str) => str.replace(/[\/\\?%*:|"<>\s]+/g, '_');
+      const cleanMapel = cleanForFilename(mapelRaw);
+      const cleanKelas = cleanForFilename(kelasRaw);
+
+      let nameParts = [];
+      if (cleanMapel) nameParts.push(cleanMapel);
+      if (cleanKelas) nameParts.push(cleanKelas);
+      nameParts.push('ASAT_2526');
+
+      this.downloadFilename = `${nameParts.join('_')}.docx`;
 
       document.getElementById('success-count').textContent =
         `${toGenerate.length} soal berhasil dikonversi ke template soal Moodle`;
@@ -385,71 +398,71 @@ const App = {
   // ── Example Soal ────────────────────────────────────────
   _loadExample() {
     document.getElementById('text-input').value = `SOAL 1
-Kode: MTK-001
-Mapel: Matematika
-Kelas/Jurusan: XII IPA
-Kompetensi/Materi: Integral Tak Tentu
+Kode: VDG-001
+Mapel: Videografi
+Kelas/Jurusan: XI DKV 4
+Kompetensi/Materi: Teknik Pengambilan Gambar
 Level: Sedang
 Skor: 1
 
 Pertanyaan:
-Hasil dari ∫(3x² + 2x - 1) dx adalah...
+Sudut pengambilan gambar di mana kamera diletakkan lebih rendah dari ketinggian objek, sehingga objek tampak lebih dominan, besar, dan berwibawa disebut...
 
-A. x³ + x² - x + C
-B. x³ + x² + x + C
-C. 3x³ + 2x² - x + C
-D. x³ - x² - x + C
-E. 3x² + 2 + C
+A. Bird eye view
+B. High angle
+C. Eye level
+D. Low angle
+E. Frog eye view
 
-Kunci: A
-Pembahasan: Dengan mengintegrasikan term per term: ∫3x²dx + ∫2xdx - ∫1dx = x³ + x² - x + C
+Kunci: D
+Pembahasan: Low angle adalah teknik pengambilan gambar dengan memosisikan kamera lebih rendah dari objek sehingga memberikan kesan objek terlihat megah, berwibawa, atau dominan.
 
 ---
 
 SOAL 2
-Kode: MTK-002
-Mapel: Matematika
-Kelas/Jurusan: XII IPA
-Kompetensi/Materi: Limit Fungsi
+Kode: VDG-002
+Mapel: Videografi
+Kelas/Jurusan: XI DKV 4
+Kompetensi/Materi: Pengaturan Eksposur Kamera
 Level: Mudah
 Skor: 1
 
 Pertanyaan:
-Nilai dari lim(x→2) (x² - 4)/(x - 2) adalah...
+Komponen segitiga eksposur (exposure triangle) yang berfungsi mengontrol durasi sensor kamera dalam menerima cahaya adalah...
 
-A. 0
-B. 2
-C. 4
-D. 8
-E. Tidak terdefinisi
+A. Aperture
+B. Shutter speed
+C. ISO
+D. White balance
+E. Focus ring
 
-Kunci: C
-Pembahasan: lim(x→2) (x²-4)/(x-2) = lim(x→2) (x+2)(x-2)/(x-2) = lim(x→2)(x+2) = 4
+Kunci: B
+Pembahasan: Shutter speed (kecepatan rana) menentukan lamanya waktu sensor kamera terbuka untuk menerima cahaya yang masuk.
 
 ---
 
 SOAL 3
-Kode: BIO-001
-Mapel: Biologi
-Kelas/Jurusan: XI IPA
-Kompetensi/Materi: Sistem Pencernaan
+Kode: VDG-003
+Mapel: Videografi
+Kelas/Jurusan: XI DKV 4
+Kompetensi/Materi: Pergerakan Kamera (Camera Movement)
 Level: Sulit
 Skor: 2
 
 Stimulus:
-Perhatikan diagram sistem pencernaan manusia. Proses pencernaan melibatkan berbagai enzim yang diproduksi oleh organ pencernaan tertentu.
+Dalam memproduksi sebuah film pendek tentang kepanikan tokoh utama di tengah keramaian kota, sutradara menginginkan kamera bergerak mengikuti langkah kaki tokoh utama secara stabil tanpa adanya guncangan.
 
 Pertanyaan:
-Enzim yang diproduksi pankreas dan berfungsi memecah protein menjadi peptida adalah...
+Alat bantu pergerakan kamera dan teknik kamera yang paling tepat digunakan untuk mencapai visualisasi tersebut adalah...
 
-A. Amilase
-B. Lipase
-C. Tripsin
-D. Ptialin
-E. Pepsin
+A. Tripod dengan teknik panning
+B. Jib arm dengan teknik tilting
+C. Gimbal / Stabilizer dengan teknik tracking
+D. Dolly track dengan teknik pedestal
+E. Handheld dengan teknik rolling
 
 Kunci: C
-Pembahasan: Tripsin adalah enzim proteolitik yang diproduksi pankreas dalam bentuk tripsinogen, lalu diaktifkan di usus halus oleh enterokinase menjadi tripsin aktif.`;
+Pembahasan: Gimbal/stabilizer berfungsi meredam guncangan saat kamera dibawa bergerak dinamis mengikuti objek (tracking/following shot).`;
 
     this._switchTab('text');
     document.getElementById('text-input').scrollTop = 0;
