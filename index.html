@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Konverter Soal CBT – Layung Template</title>
+  <meta name="description" content="Konversi soal pilihan ganda ke template Layung CBT secara otomatis. Mendukung input teks, Excel, dan Word.">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="bg-mesh"></div>
+
+<div class="app-container">
+
+  <!-- Header -->
+  <header class="app-header">
+    <div class="header-badge">📝 Layung CBT Converter</div>
+    <h1>Konverter Soal PG</h1>
+    <p>Konversi soal pilihan ganda ke <strong>template Layung CBT</strong> secara otomatis. Soal bertambah sesuai jumlah yang dikonversi.</p>
+  </header>
+
+  <!-- Step Indicator -->
+  <div class="steps">
+    <div class="step active" id="step-indicator-1">
+      <div class="step-num">1</div>
+      <span>Input Soal</span>
+    </div>
+    <div class="step-line"></div>
+    <div class="step" id="step-indicator-2">
+      <div class="step-num">2</div>
+      <span>Preview</span>
+    </div>
+    <div class="step-line"></div>
+    <div class="step" id="step-indicator-3">
+      <div class="step-num">3</div>
+      <span>Download</span>
+    </div>
+  </div>
+
+  <!-- ========== STEP 1: INPUT ========== -->
+  <section class="step-section active" id="step-1">
+
+    <!-- Tab Selector -->
+    <div class="tab-container">
+      <button class="tab-btn active" data-tab="text">
+        <span class="tab-icon">✏️</span> Ketik Langsung
+      </button>
+      <button class="tab-btn" data-tab="excel">
+        <span class="tab-icon">📊</span> Upload Excel (.xlsx)
+      </button>
+      <button class="tab-btn" data-tab="word">
+        <span class="tab-icon">📄</span> Upload Word (.docx)
+      </button>
+    </div>
+
+    <!-- Default Values -->
+    <div class="card">
+      <div class="card-title">⚙️ Nilai Default</div>
+      <p class="card-desc">Diterapkan otomatis ke semua soal yang tidak memiliki field ini</p>
+      <div class="defaults-grid">
+        <div class="field-group">
+          <label>Mapel</label>
+          <input type="text" id="default-mapel" placeholder="Contoh: Matematika">
+        </div>
+        <div class="field-group">
+          <label>Kelas / Jurusan</label>
+          <input type="text" id="default-kelas" placeholder="Contoh: XII IPA">
+        </div>
+        <div class="field-group">
+          <label>Level Default</label>
+          <select id="default-level">
+            <option value="Sedang">Sedang</option>
+            <option value="Mudah">Mudah</option>
+            <option value="Sulit">Sulit</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Skor Default</label>
+          <input type="number" id="default-skor" value="1" min="0" max="100">
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Teks Langsung -->
+    <div class="tab-content active" id="tab-text">
+      <div class="card">
+        <div class="format-hint">
+          <h4>📋 Format Input Teks</h4>
+          <p>Pisahkan tiap soal dengan <code>---</code> atau header <code>SOAL N</code>. Field yang tidak diisi akan menggunakan nilai default di atas.</p>
+          <pre>SOAL 1
+Kode: MTK-001
+Mapel: Matematika
+Kelas/Jurusan: XII IPA
+Level: Sedang
+
+Pertanyaan:
+Teks pertanyaan di sini...
+
+A. Opsi A
+B. Opsi B
+C. Opsi C
+D. Opsi D
+E. Opsi E
+
+Kunci: A
+Pembahasan: Penjelasan jawaban...</pre>
+          <button class="btn-link" id="btn-load-example">🔖 Muat 3 contoh soal →</button>
+        </div>
+        <textarea
+          id="text-input"
+          placeholder="Ketik atau paste soal di sini..."
+          rows="20"
+        ></textarea>
+      </div>
+    </div>
+
+    <!-- Tab: Excel -->
+    <div class="tab-content" id="tab-excel">
+      <div class="card">
+        <div class="format-hint">
+          <h4>📋 Format Kolom Excel</h4>
+          <p>Baris pertama = header. Urutan kolom bebas, sistem mengenali nama kolom berikut:</p>
+          <div class="column-tags">
+            <span class="tag">No</span>
+            <span class="tag">Kode</span>
+            <span class="tag">Mapel</span>
+            <span class="tag">Kelas</span>
+            <span class="tag">Kompetensi</span>
+            <span class="tag">Level</span>
+            <span class="tag">Skor</span>
+            <span class="tag">Stimulus</span>
+            <span class="tag required">Pertanyaan *</span>
+            <span class="tag required">A / OpsiA *</span>
+            <span class="tag required">B / OpsiB *</span>
+            <span class="tag required">C / OpsiC *</span>
+            <span class="tag required">D / OpsiD *</span>
+            <span class="tag required">E / OpsiE *</span>
+            <span class="tag required">Kunci *</span>
+            <span class="tag">Pembahasan</span>
+          </div>
+        </div>
+        <div class="dropzone" id="excel-dropzone">
+          <div class="dropzone-icon">📊</div>
+          <p>Drag &amp; drop file Excel di sini</p>
+          <p class="dropzone-sub">atau</p>
+          <label class="btn-upload">
+            Pilih File .xlsx
+            <input type="file" id="excel-input" accept=".xlsx,.xls" hidden>
+          </label>
+          <div class="file-info" id="excel-file-info"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Tab: Word -->
+    <div class="tab-content" id="tab-word">
+      <div class="card">
+        <div class="format-hint">
+          <h4>📋 Cara Kerja</h4>
+          <p>Upload file Word (.docx) berisi soal dalam format bebas. Sistem mendeteksi otomatis pola soal PG dengan penomoran dan opsi A–E.</p>
+          <p><strong>Pola yang dikenali:</strong> <code>1. Pertanyaan</code> → <code>A. Opsi</code> → <code>Kunci: A</code></p>
+        </div>
+        <div class="dropzone" id="word-dropzone">
+          <div class="dropzone-icon">📄</div>
+          <p>Drag &amp; drop file Word di sini</p>
+          <p class="dropzone-sub">atau</p>
+          <label class="btn-upload">
+            Pilih File .docx
+            <input type="file" id="word-input" accept=".docx" hidden>
+          </label>
+          <div class="file-info" id="word-file-info"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Parse Action -->
+    <div class="action-bar">
+      <button class="btn-primary" id="btn-parse">
+        <span class="btn-icon">🔍</span>
+        Parse &amp; Preview Soal
+      </button>
+    </div>
+
+    <div class="error-message" id="error-message" style="display:none"></div>
+  </section>
+
+  <!-- ========== STEP 2: PREVIEW ========== -->
+  <section class="step-section" id="step-2">
+    <div class="preview-header">
+      <div>
+        <h2>Preview Soal</h2>
+        <p id="preview-count">0 soal berhasil diparsing</p>
+      </div>
+      <div class="preview-actions">
+        <button class="btn-secondary" id="btn-back">← Kembali</button>
+        <button class="btn-primary" id="btn-generate">
+          <span class="btn-icon">⚡</span>
+          Generate .docx
+        </button>
+      </div>
+    </div>
+
+    <div class="stats-bar">
+      <div class="stat valid">
+        <span class="stat-num" id="stat-valid">0</span>
+        <span class="stat-label">✅ Valid</span>
+      </div>
+      <div class="stat warning">
+        <span class="stat-num" id="stat-warning">0</span>
+        <span class="stat-label">⚠️ Peringatan</span>
+      </div>
+      <div class="stat error">
+        <span class="stat-num" id="stat-error">0</span>
+        <span class="stat-label">❌ Error</span>
+      </div>
+    </div>
+
+    <div id="preview-list"></div>
+  </section>
+
+  <!-- ========== STEP 3: DOWNLOAD ========== -->
+  <section class="step-section" id="step-3">
+    <div class="success-card">
+      <span class="success-icon">🎉</span>
+      <h2>Dokumen Siap Didownload!</h2>
+      <p id="success-count">File .docx telah digenerate sesuai template Layung CBT.</p>
+      <div class="download-actions">
+        <button class="btn-download" id="btn-download">
+          ⬇️ Download .docx
+        </button>
+        <button class="btn-secondary" id="btn-reset">🔄 Konversi Lagi</button>
+      </div>
+      <div class="download-info">
+        <div class="info-item">
+          <span class="info-icon">📁</span>
+          <span id="download-filename">output-soal.docx</span>
+        </div>
+        <div class="info-item">
+          <span class="info-icon">📋</span>
+          <span id="download-count">0 soal</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div><!-- /app-container -->
+
+<!-- ========== EDIT MODAL ========== -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3>✏️ Edit Soal</h3>
+      <button class="modal-close" id="btn-modal-close">✕</button>
+    </div>
+    <div class="modal-body">
+      <div class="modal-grid">
+        <div class="field-group">
+          <label>Kode Soal</label>
+          <input type="text" id="edit-kode" placeholder="MTK-001">
+        </div>
+        <div class="field-group">
+          <label>Mapel</label>
+          <input type="text" id="edit-mapel" placeholder="Matematika">
+        </div>
+        <div class="field-group">
+          <label>Kelas / Jurusan</label>
+          <input type="text" id="edit-kelas" placeholder="XII IPA">
+        </div>
+        <div class="field-group">
+          <label>Kompetensi / Materi</label>
+          <input type="text" id="edit-kompetensi" placeholder="Integral">
+        </div>
+        <div class="field-group">
+          <label>Level</label>
+          <select id="edit-level">
+            <option value="Mudah">Mudah</option>
+            <option value="Sedang">Sedang</option>
+            <option value="Sulit">Sulit</option>
+          </select>
+        </div>
+        <div class="field-group">
+          <label>Skor</label>
+          <input type="number" id="edit-skor" value="1" min="0">
+        </div>
+      </div>
+      <div class="field-group full">
+        <label>Stimulus (opsional)</label>
+        <textarea id="edit-stimulus" rows="2" placeholder="Teks stimulus, wacana, atau konteks soal..."></textarea>
+      </div>
+      <div class="field-group full">
+        <label>Pertanyaan *</label>
+        <textarea id="edit-pertanyaan" rows="3" placeholder="Teks pertanyaan..."></textarea>
+      </div>
+      <div class="pilihan-edit">
+        <div class="field-group">
+          <label>Opsi A *</label>
+          <input type="text" id="edit-a" placeholder="Opsi A">
+        </div>
+        <div class="field-group">
+          <label>Opsi B *</label>
+          <input type="text" id="edit-b" placeholder="Opsi B">
+        </div>
+        <div class="field-group">
+          <label>Opsi C *</label>
+          <input type="text" id="edit-c" placeholder="Opsi C">
+        </div>
+        <div class="field-group">
+          <label>Opsi D *</label>
+          <input type="text" id="edit-d" placeholder="Opsi D">
+        </div>
+        <div class="field-group">
+          <label>Opsi E *</label>
+          <input type="text" id="edit-e" placeholder="Opsi E">
+        </div>
+        <div class="field-group">
+          <label>Kunci Jawaban *</label>
+          <select id="edit-kunci">
+            <option value="">-- Pilih --</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+          </select>
+        </div>
+      </div>
+      <div class="field-group full">
+        <label>Pembahasan</label>
+        <textarea id="edit-pembahasan" rows="3" placeholder="Penjelasan/solusi jawaban..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" id="btn-modal-cancel">Batal</button>
+      <button class="btn-primary" id="btn-modal-save">💾 Simpan</button>
+    </div>
+  </div>
+</div>
+
+<!-- Loading Overlay -->
+<div id="loading-overlay" style="display:none">
+  <div class="loading-box">
+    <div class="spinner"></div>
+    <p id="loading-msg">Memproses...</p>
+  </div>
+</div>
+
+<!-- External Libraries -->
+<!-- XLSX: pilih data Excel -->
+<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<!-- Mammoth: ekstrak teks dari Word -->
+<script src="https://cdn.jsdelivr.net/npm/mammoth@1.6.0/mammoth.browser.min.js"></script>
+<!-- docx: generate .docx — LOCAL BUNDLE (tidak butuh internet) -->
+<script src="js/docx.min.js"></script>
+
+<!-- App Scripts -->
+<script src="js/parsers.js"></script>
+<script src="js/generator.js"></script>
+<script src="js/app.js"></script>
+
+</body>
+</html>
