@@ -2,7 +2,7 @@
  * GENERATOR.JS — docx v7.8.2 compatible
  *
  * Menghasilkan file .docx yang IDENTIK dengan
- * template-input-soal-pg-sederhana.docx (Layung CBT).
+ * template-input-soal-pg-sederhana.docx (Template Soal Moodle).
  *
  * Spesifikasi warna dari XML asli:
  *   Judul dokumen  : #0B2545
@@ -206,7 +206,7 @@ const DocxGenerator = {
     children.push(
       para('TEMPLATE INPUT SOAL PILIHAN GANDA',
            { center: true, bold: true, color: '0B2545', size: 36 }),
-      para('Layung CBT - Guru cukup mengisi format di bawah ini',
+      para('Template Soal Moodle - Guru cukup mengisi format di bawah ini',
            { center: true, italic: true }),
       para('Catatan singkat: gambar boleh langsung ditempel di dokumen. Untuk rumus, gunakan Equation Word jika rumus cukup kompleks.')
     );

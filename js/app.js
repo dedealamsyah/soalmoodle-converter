@@ -332,10 +332,10 @@ const App = {
 
       const now = new Date();
       const dateStr = now.toISOString().slice(0, 10);
-      this.downloadFilename = `soal-layung-cbt-${dateStr}.docx`;
+      this.downloadFilename = `convert-mania-${dateStr}.docx`;
 
       document.getElementById('success-count').textContent =
-        `${toGenerate.length} soal berhasil dikonversi ke format template Layung CBT`;
+        `${toGenerate.length} soal berhasil dikonversi ke template soal Moodle`;
       document.getElementById('download-filename').textContent = this.downloadFilename;
       document.getElementById('download-count').textContent = `${toGenerate.length} soal`;
 
