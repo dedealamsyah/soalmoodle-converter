@@ -87,6 +87,7 @@ const App = {
     return {
       mapel: document.getElementById('default-mapel').value.trim(),
       kelas: document.getElementById('default-kelas').value.trim(),
+      kompetensi: document.getElementById('default-kompetensi').value.trim(),
       level: document.getElementById('default-level').value,
       skor:  parseInt(document.getElementById('default-skor').value) || 1
     };
@@ -225,6 +226,7 @@ const App = {
             <div class="field-item"><span class="field-label">Kode Soal</span><span class="field-value">${soal.kodeSoal || '–'}</span></div>
             <div class="field-item"><span class="field-label">Mapel</span><span class="field-value">${soal.mapel || '–'}</span></div>
             <div class="field-item"><span class="field-label">Kelas/Jurusan</span><span class="field-value">${soal.kelasJurusan || '–'}</span></div>
+            <div class="field-item"><span class="field-label">Kompetensi/Materi</span><span class="field-value">${soal.kompetensiMateri || '–'}</span></div>
             <div class="field-item"><span class="field-label">Level</span><span class="field-value">${soal.level || '–'}</span></div>
             <div class="field-item"><span class="field-label">Skor</span><span class="field-value">${soal.skor}</span></div>
             <div class="field-item"><span class="field-label">Kunci</span><span class="field-value"><span class="kunci-badge">${soal.kunci || '?'}</span></span></div>

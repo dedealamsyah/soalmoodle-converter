@@ -54,7 +54,7 @@ const SoalParser = {
       kodeSoal: '',
       mapel: defaults.mapel || '',
       kelasJurusan: defaults.kelas || '',
-      kompetensiMateri: '',
+      kompetensiMateri: defaults.kompetensi || '',
       level: defaults.level || 'Sedang',
       skor: defaults.skor || 1,
       stimulus: '',
@@ -149,8 +149,15 @@ const SoalParser = {
         }
       }
 
+      // ── Explicit Kompetensi/Materi check ──
+      if (/^Kompetensi\s*[/]\s*Materi\s*:/i.test(line)) {
+        const val = line.replace(/^Kompetensi\s*[/]\s*Materi\s*:\s*/i, '').trim();
+        if (val) soal.kompetensiMateri = val;
+        continue;
+      }
+
       // ── Metadata key:value ──
-      const metaRe = /^(Kode\s*Soal|Kode|Mapel|Mata\s*Pelajaran|Kelas\/Jurusan|Kelas|Jurusan|Kompetensi\/Materi|Kompetensi|Materi|Topik|Level|Kesulitan|Skor|Bobot|Poin)\s*:\s*(.*)/i;
+      const metaRe = /^(Kode\s*Soal|Kode|Mapel|Mata\s*Pelajaran|Kelas[/]Jurusan|Kelas|Jurusan|Kompetensi[/]Materi|Kompetensi|Materi|Topik|Level|Kesulitan|Skor|Bobot|Poin)\s*:\s*(.*)/i;
       const metaM = line.match(metaRe);
       if (metaM) {
         const key = metaM[1].toLowerCase().replace(/[\s\/]/g, '');
@@ -158,7 +165,7 @@ const SoalParser = {
         if (key === 'kode' || key === 'kodesoal') soal.kodeSoal = val;
         else if (key === 'mapel' || key === 'matapelajaran') { if (val) soal.mapel = val; }
         else if (key === 'kelas' || key === 'kelasjurusan' || key === 'jurusan') { if (val) soal.kelasJurusan = val; }
-        else if (key === 'kompetensi' || key === 'kompetensimater' || key === 'materi' || key === 'topik') soal.kompetensiMateri = val;
+        else if (key === 'kompetensimater' || key === 'kompetensi' || key === 'materi' || key === 'topik') { if (val) soal.kompetensiMateri = val; }
         else if (key === 'level' || key === 'kesulitan') { const lv = this.normalizeLevel(val); if (lv) soal.level = lv; }
         else if (key === 'skor' || key === 'bobot' || key === 'poin') soal.skor = parseInt(val) || 1;
         continue;
@@ -226,7 +233,8 @@ const SoalParser = {
           pembahasanLines.push(line); break;
         case 'meta':
           // If starts looking like a question text (not a metadata field)
-          if (!/^\w[\w\s]*:/.test(line)) {
+          // Allow word characters, spaces, slashes, and other common separators in metadata keys
+          if (!/^[\w\s\/\-]+\s*:/.test(line)) {
             pertLines.push(line); mode = 'pertanyaan';
           }
           break;
