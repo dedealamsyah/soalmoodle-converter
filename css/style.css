@@ -78,21 +78,22 @@ body {
 
 .header-badge {
   display: inline-flex; align-items: center; justify-content: center;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid var(--border-color);
+  background: linear-gradient(180deg, rgba(255, 182, 236, 0.25), rgba(255, 116, 191, 0.18));
+  border: 1px solid rgba(255, 124, 190, 0.35);
+  color: #ff7bb4;
   backdrop-filter: blur(10px);
   border-radius: 50%;
   width: 64px;
   height: 64px;
   font-size: 32px;
   margin-bottom: 20px;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+  box-shadow: 0 8px 24px rgba(255, 123, 180, 0.25);
   transition: var(--transition);
 }
 
 .header-badge:hover {
   transform: scale(1.08) rotate(5deg);
-  border-color: rgba(255, 255, 255, 0.2);
+  border-color: rgba(255, 124, 190, 0.55);
 }
 
 .app-header h1 {
