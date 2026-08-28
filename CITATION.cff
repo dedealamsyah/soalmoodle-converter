@@ -1,0 +1,28 @@
+cff-version: 1.2.0
+message: "Jika menggunakan perangkat lunak ini, silakan mengutip sebagai berikut."
+title: "SoalMoodle Converter"
+authors:
+  - family-names: "Alamsyah"
+    given-names: "Dede"
+    affiliation: "SMKN 9 Garut"
+    email: "dedealamsyah29@gmail.com"
+version: "1.0.0"
+date-released: "2026-08-28"
+repository-code: "isi-URL-repositori-atau-Zenodo-setelah-diunggah"
+license: "isi-lisensi-pilihan-Anda"
+keywords:
+  - moodle
+  - soal pilihan ganda
+  - konversi dokumen
+  - aplikasi client-side
+  - e-learning
+preferred-citation:
+  type: article
+  title: "Rancang Bangun Aplikasi Web Client-Side SoalMoodle Converter untuk Otomatisasi Konversi Kartu Soal Pilihan Ganda ke Template Soal Moodle"
+  authors:
+    - family-names: "Alamsyah"
+      given-names: "Dede"
+      affiliation: "SMKN 9 Garut"
+  year: 2026
+  doi: "10.5281/zenodo.22135222"
+  url: "https://doi.org/10.5281/zenodo.22135222"
