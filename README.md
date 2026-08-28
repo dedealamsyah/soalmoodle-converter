@@ -1,6 +1,6 @@
-# Convert Mania — Panduan Penggunaan & Pengembangan
+# SoalMoodle Converter — Panduan Penggunaan & Pengembangan
 
-Convert Mania adalah aplikasi web berbasis client-side (offline-first) untuk mengonversi kartu soal pilihan ganda (dari teks langsung, Word, atau Excel) ke template soal Moodle (.docx) secara otomatis.
+SoalMoodle Converter adalah aplikasi web berbasis client-side (offline-first) untuk mengonversi kartu soal pilihan ganda (dari teks langsung, Word, atau Excel) ke template soal Moodle (.docx) secara otomatis.
 
 Dokumen ini berisi panduan untuk menjalankan aplikasi serta cara melanjutkan pengembangan di komputer lain (Windows maupun macOS).
 
@@ -11,8 +11,8 @@ Dokumen ini berisi panduan untuk menjalankan aplikasi serta cara melanjutkan pen
 Aplikasi ini bersifat **serverless/client-side**, artinya berjalan sepenuhnya di dalam browser Anda tanpa memerlukan server backend.
 
 ### Cara 1: Buka Langsung (Paling Mudah)
-1. Buka folder proyek **Convert Mania**.
-2. Klik ganda (atau klik kanan -> Open With browser) pada file [index.html](file:///d:/MyLearn/covert-soal/index.html).
+1. Buka folder proyek **SoalMoodle Converter**.
+2. Klik ganda (atau klik kanan -> Open With browser) pada file [index.html](index.html).
 3. Aplikasi akan langsung berjalan di browser Anda (Chrome, Firefox, Safari, atau Edge).
 
 ### Cara 2: Menggunakan Local Server (Sangat Direkomendasikan)
@@ -22,7 +22,7 @@ Beberapa browser memiliki batasan keamanan ketat ketika membuka file lokal melal
 1. Buka aplikasi **Terminal**.
 2. Masuk ke direktori proyek menggunakan perintah `cd`:
    ```bash
-   cd /path/to/folder/covert-soal
+   cd /path/to/soalmoodle-converter
    ```
 3. Jalankan server Python bawaan macOS:
    ```bash
@@ -56,7 +56,7 @@ Pastikan komputer baru sudah terinstall **Node.js** (versi 16 atau lebih baru). 
 1. Buka **Command Prompt** atau **PowerShell**.
 2. Arahkan ke folder proyek:
    ```powershell
-   cd C:\path\to\covert-soal
+   cd C:\path\to\soalmoodle-converter
    ```
 3. Install dependencies (jika ingin memperbarui/mengembangkan library docx):
    ```powershell
@@ -67,7 +67,7 @@ Pastikan komputer baru sudah terinstall **Node.js** (versi 16 atau lebih baru). 
 1. Buka aplikasi **Terminal**.
 2. Arahkan ke folder proyek:
    ```bash
-   cd /path/to/covert-soal
+   cd /path/to/soalmoodle-converter
    ```
 3. Install dependencies:
    ```bash

@@ -1,0 +1,30 @@
+{
+  "title": "SoalMoodle Converter: Aplikasi Web Client-Side untuk Konversi Kartu Soal Pilihan Ganda ke Template Soal Moodle",
+  "description": "SoalMoodle Converter adalah aplikasi web berbasis client-side (serverless) yang mengonversi kartu soal pilihan ganda dari tiga sumber masukan—teks langsung, Excel (.xlsx), dan Word (.docx)—menjadi template soal Moodle (.docx) secara otomatis. Aplikasi menyediakan alur tiga langkah (input, pratayap dengan validasi per soal, dan unduh), membangun berkas keluaran yang identik dengan template soal Moodle resmi menggunakan pustaka docx. Pendekatan offline-first menjaga berkas pengguna tetap lokal dan memungkinkan pengoperasian tanpa server. Dibangun dengan HTML, CSS, dan JavaScript murni, serta memanfaatkan pustaka SheetJS dan Mammoth untuk parsing Excel dan Word.",
+  "keywords": [
+    "Moodle",
+    "soal pilihan ganda",
+    "konversi dokumen",
+    "aplikasi client-side",
+    "e-learning",
+    "otomatisasi input soal",
+    "javascript",
+    "docx"
+  ],
+  "license": "mit",
+  "creators": [
+    {
+      "name": "Alamsyah, Dede",
+      "orcid": ""
+    }
+  ],
+  "upload_type": "software",
+  "access_right": "open",
+  "language": "ind",
+  "related_identifiers": [
+    {
+      "relation": "isSupplementTo",
+      "identifier": ""
+    }
+  ]
+}

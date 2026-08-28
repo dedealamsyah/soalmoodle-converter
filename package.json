@@ -1,4 +1,8 @@
 {
+  "name": "soalmoodle-converter",
+  "version": "1.0.0",
+  "description": "Aplikasi web client-side untuk mengonversi kartu soal pilihan ganda menjadi template soal Moodle (.docx) secara otomatis.",
+  "private": true,
   "dependencies": {
     "docx": "^7.8.2"
   }
